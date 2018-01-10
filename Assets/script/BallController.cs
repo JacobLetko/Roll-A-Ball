@@ -7,15 +7,22 @@ public class BallController : MonoBehaviour {
     Rigidbody rb;
     public float speed;
     public int score;
-    public float stamina;
+    
     public int health;
+
+    public float stamina;
     public float sprintmul;
     float finalspeed;
+
+    public float jump;
+    public bool jumpA;
+
+    public Vector3 location;
 
 	// Use this for initialization
 	void Start ()
     {
-        rb = GetComponent<Rigidbody>();
+    
 	}
 	
 	// Update is called once per frame
@@ -25,18 +32,20 @@ public class BallController : MonoBehaviour {
         float vertical = Input.GetAxis("Vertical");
         Vector3 move = new Vector3(horizontal, 0, vertical);
 
-        float sprintval = Input.GetAxis("Sprint");
-        bool sprint = sprintval != 0.0f;//&&stamina > 0;
-
         finalspeed += speed;
 
-        if (sprint)
+        if(Input.GetButtonDown("return"))
         {
-            finalspeed *= sprintmul;
+            transform.position = location;
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            transform.position += transform.up * jump * Time.deltaTime;
         }
 
             rb.AddForce(move * speed * Time.deltaTime);
-        if (stamina <= 100 && Input.GetKeyUp(KeyCode.LeftShift))
+        if (stamina < 100 && Input.GetButtonUp("Sprint"))
         {
             stamina += Time.deltaTime / 2;
         }

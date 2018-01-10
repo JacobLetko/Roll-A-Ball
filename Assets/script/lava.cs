@@ -23,7 +23,7 @@ public class lava : MonoBehaviour {
             var PlayerController = other.GetComponent<BallController>();
             if(PlayerController != null)
             {
-                PlayerController.health -= damage;
+                PlayerController.health = PlayerController.health - damage;
             }
         }
     }
